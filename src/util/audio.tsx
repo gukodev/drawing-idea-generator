@@ -1,12 +1,14 @@
 import { Audio, Play } from '@/contexts/AudioContext'
 
 interface OnClickWithAudio {
+    play: Play
     audio?: Audio
-    onClick?: (...args: any[]) => any
-    e: React.MouseEvent<HTMLButtonElement>
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => any
 }
 
-export function onClickWithAudio(play: Play, { audio = 'poin', onClick, e }: OnClickWithAudio) {
-    if (audio) play(audio)
-    if (onClick) onClick(e)
+export function onClickWithAudio({ play, audio = 'poin', onClick }: OnClickWithAudio) {
+    return (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (audio) play(audio)
+        if (onClick) onClick(e)
+    }
 }

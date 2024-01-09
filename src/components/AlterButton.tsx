@@ -15,7 +15,7 @@ export default function AlterButton({ children, onClick, ...rest }: AlterButtonP
                 'transition-colors duration-200 ease-out',
                 'font-bold bg-slate-200 text-slate-500 hover:bg-slate-300'
             )}
-            onClick={(e) => onClickWithAudio(play, { onClick, e })}
+            onClick={onClickWithAudio({ play, onClick })}
             {...rest}
         >
             {children}
