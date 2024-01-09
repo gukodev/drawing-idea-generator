@@ -9,7 +9,7 @@ export default function Home() {
             <AudioContextProvider>
                 <div className='w-full max-w-screen-lg px-4 mx-auto'>
                     <NavBar />
-                    <main>
+                    <main className='py-10'>
                         <EmojiGenerator />
                     </main>
                 </div>
