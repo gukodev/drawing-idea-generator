@@ -30,6 +30,7 @@ export default function SelectiveButton({
                 'bg-slate-200 border-slate-300 text-slate-400 hover:bg-slate-200 hover:border-slate-300 opacity-50',
                 selected ? `${color} opacity-100` : null
             )}
+            noAudio
             onClick={handleClick}
         >
             {children}

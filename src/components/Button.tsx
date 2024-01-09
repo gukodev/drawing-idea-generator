@@ -1,5 +1,6 @@
 'use client'
 import { useAudio } from '@/contexts/AudioContext'
+import { onClickWithAudio } from '@/util/audio'
 import { twMerge } from 'tailwind-merge'
 
 const colorAccents = {
@@ -15,6 +16,7 @@ type ColorAccent = keyof typeof colorAccents
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode
     accent?: ColorAccent
+    noAudio?: boolean
 }
 
 export function getAccentColor(accent: ColorAccent) {
@@ -26,15 +28,11 @@ export default function Button({
     accent = 'purple',
     onClick,
     className,
+    noAudio = false,
     ...rest
 }: ButtonProps) {
     const color = getAccentColor(accent)
     const { play } = useAudio()
-
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        play('poin')
-        if (onClick) onClick(e)
-    }
 
     return (
         <button
@@ -46,7 +44,7 @@ export default function Button({
                 color, // color
                 className // custom
             )}
-            onClick={handleClick}
+            onClick={noAudio ? onClick : onClickWithAudio({ play, onClick })}
         >
             {children}
         </button>
