@@ -3,12 +3,16 @@ import { useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import AlterButton from './AlterButton'
 
+const MAX_NUM = 5
+const MIN_NUM = 1
+const DEFAULT_NUM = 3
+
 export default function EmojiGenerator() {
     const [inputError, setInputError] = useState<boolean>(false)
-    const [num, setNum] = useState<number>(3)
+    const [num, setNum] = useState<number>(DEFAULT_NUM)
 
     const validateInput = (num: number) => {
-        if (num < 1 || num > 5) return false
+        if (num < MIN_NUM || num > MAX_NUM) return false
         return true
     }
 
@@ -29,7 +33,7 @@ export default function EmojiGenerator() {
     const handleDecrement = () => {
         setNum((prev) => {
             const n = prev - 1
-            if (n < 0) return prev
+            if (n <= 0) return prev
             return n
         })
     }
@@ -52,11 +56,11 @@ export default function EmojiGenerator() {
                     <div className='flex items-center gap-1'>
                         <input
                             type='number'
-                            min={1}
-                            max={5}
+                            min={MIN_NUM}
+                            max={MAX_NUM}
                             value={num}
                             onChange={handleInputChange}
-                            placeholder='3'
+                            placeholder={DEFAULT_NUM.toString()}
                             className={twMerge(
                                 'w-16 p-1 rounded-xl',
                                 'transition-colors duration-200 ease-out',
@@ -67,8 +71,12 @@ export default function EmojiGenerator() {
                             )}
                         />
                         <div className='flex flex-col gap-1'>
-                            <AlterButton onClick={handleIncrement}>{'+'}</AlterButton>
-                            <AlterButton onClick={handleDecrement}>{'-'}</AlterButton>
+                            <AlterButton onClick={handleIncrement} disabled={num >= MAX_NUM}>
+                                {'+'}
+                            </AlterButton>
+                            <AlterButton onClick={handleDecrement} disabled={num <= MIN_NUM}>
+                                {'-'}
+                            </AlterButton>
                         </div>
                     </div>
                 </div>
