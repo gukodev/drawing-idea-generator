@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 export const AUDIOS = {
     poin: {
         src: '/audio/poin.mp3',
-        volume: 0.3333,
+        volume: 0.2,
     },
 } as const
 export type Audio = keyof typeof AUDIOS
@@ -14,6 +14,7 @@ interface AudioContextValue {
     setAudioEnabled: (enabled: boolean) => void
     play: (audio: Audio) => void
 }
+export type Play = ReturnType<typeof useAudio>['play']
 
 const AudioContext = createContext<AudioContextValue | undefined>(undefined)
 
