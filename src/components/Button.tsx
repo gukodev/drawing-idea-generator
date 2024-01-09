@@ -18,7 +18,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export function getAccentColor(accent: ColorAccent) {
-    console.log(accent)
     return colorAccents[accent]
 }
 
