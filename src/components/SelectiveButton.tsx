@@ -1,16 +1,11 @@
 'use client'
 import { useAudio } from '@/contexts/AudioContext'
 import { twMerge } from 'tailwind-merge'
+import Button, { ButtonProps, getAccentColor } from './Button'
 
-interface SelectiveButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: React.ReactNode
+type ExtendedButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps
+interface SelectiveButtonProps extends ExtendedButtonProps {
     selected?: boolean
-    accent?: 'purple' | 'red'
-}
-
-const colorAccents = {
-    purple: 'bg-purple-400 border-purple-500 text-white',
-    red: 'bg-red-400 border-red-500 text-white',
 }
 
 export default function SelectiveButton({
@@ -20,7 +15,7 @@ export default function SelectiveButton({
     onClick,
     ...rest
 }: SelectiveButtonProps) {
-    const colorAccent = colorAccents[accent]
+    const color = getAccentColor(accent)
     const { play } = useAudio()
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -29,17 +24,15 @@ export default function SelectiveButton({
     }
 
     return (
-        <button
+        <Button
             {...rest}
             className={twMerge(
-                'inline-flex items-center justify-center rounded-xl py-1.5 px-4 border-2', // general
-                'leading-none font-sans font-medium text-lg select-none', // font/text
-                'transition-colors ease-out', // transition
-                selected ? colorAccent : 'hover:bg-slate-300 hover:border-slate-400 opacity-50' // color
+                'bg-slate-200 border-slate-300 text-slate-400 hover:bg-slate-200 hover:border-slate-300 opacity-50',
+                selected ? `${color} opacity-100` : null
             )}
             onClick={handleClick}
         >
             {children}
-        </button>
+        </Button>
     )
 }
