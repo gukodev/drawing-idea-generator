@@ -1,7 +1,10 @@
 'use client'
+import { clamp } from '@/util/math'
 import { useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import Button from '../Button'
 import AlterButton from './AlterButton'
+import EmojiField from './EmojiField'
 
 const MAX_NUM = 5
 const MIN_NUM = 1
@@ -10,6 +13,7 @@ const DEFAULT_NUM = 3
 export default function EmojiGenerator() {
     const [inputError, setInputError] = useState<boolean>(false)
     const [num, setNum] = useState<number>(DEFAULT_NUM)
+    const [rolling, setRolling] = useState<boolean>(false)
 
     const validateInput = (num: number) => {
         if (num < MIN_NUM || num > MAX_NUM) return false
@@ -24,7 +28,7 @@ export default function EmojiGenerator() {
 
     const handleIncrement = () => {
         setNum((prev) => {
-            const n = prev + 1
+            const n = (prev || 1) + 1
             if (!validateInput(n)) return prev
             return n
         })
@@ -32,7 +36,7 @@ export default function EmojiGenerator() {
 
     const handleDecrement = () => {
         setNum((prev) => {
-            const n = prev - 1
+            const n = (prev || 1) - 1
             if (n <= 0) return prev
             return n
         })
@@ -46,8 +50,16 @@ export default function EmojiGenerator() {
         setInputError(false)
     }, [num])
 
+    const handleGenerate = () => {
+        if (inputError) return
+        setRolling(true)
+        setTimeout(() => {
+            setRolling(false)
+        }, 1000)
+    }
+
     return (
-        <div>
+        <div className='flex flex-col gap-20'>
             <div className='w-full flex items-center justify-center'>
                 <div className='flex items-center gap-4'>
                     <span className='font-medium select-none text-xl text-slate-500'>
@@ -80,6 +92,12 @@ export default function EmojiGenerator() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <EmojiField num={clamp(num || 1, MIN_NUM, MAX_NUM)} rolling={rolling} />
+            <div className='w-full flex items-center justify-center'>
+                <Button accent='pink' onClick={handleGenerate}>
+                    generate
+                </Button>
             </div>
         </div>
     )
