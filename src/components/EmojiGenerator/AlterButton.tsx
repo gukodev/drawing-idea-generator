@@ -12,7 +12,7 @@ export default function AlterButton({ children, onClick, ...rest }: AlterButtonP
     return (
         <button
             className={twMerge(
-                'inline-flex items-center justify-center w-6 h-4 rounded-md',
+                'inline-flex items-center justify-center w-6 h-4 rounded-md select-none',
                 'transition-all duration-200 ease-out',
                 'font-bold bg-slate-200 text-slate-500 hover:bg-slate-300',
                 'disabled:bg-slate-300 disabled:text-slate-400 disabled:opacity-50 disabled:cursor-not-allowed'
