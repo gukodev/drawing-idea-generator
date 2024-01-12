@@ -12,6 +12,8 @@
     "dependencies": {
         "@phosphor-icons/react": "^2.0.15",
         "@types/react-twemoji": "^0.4.3",
+        "@uidotdev/usehooks": "^2.4.1",
+        "gemoji": "^8.1.0",
         "next": "14.0.4",
         "random-unicode-emoji": "^1.0.5",
         "react": "^18",

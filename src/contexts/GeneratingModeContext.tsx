@@ -19,7 +19,7 @@ export const useGeneratingMode = () => {
 }
 
 export function GeneratingModeProvider({ children }: { children: React.ReactNode }) {
-    const [mode, setMode] = useState<GeneratingMode>('idea')
+    const [mode, setMode] = useState<GeneratingMode>('emoji')
 
     const value: GeneratingModeContextValue = {
         mode,
