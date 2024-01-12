@@ -19,6 +19,7 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
     const [inputError, setInputError] = useState<boolean>(false)
     const [num, setNum] = useState<number>(DEFAULT_NUM)
     const [rolling, setRolling] = useState<boolean>(false)
+    const canGenerate = !inputError && !rolling
 
     const validateInput = (num: number) => {
         if (num < MIN_NUM || num > MAX_NUM) return false
@@ -106,7 +107,7 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
                         emojis={emojis}
                     />
                     <div className='w-full flex items-center justify-center'>
-                        <Button accent='pink' onClick={handleGenerate}>
+                        <Button accent='pink' onClick={handleGenerate} disabled={!canGenerate}>
                             generate
                         </Button>
                     </div>
