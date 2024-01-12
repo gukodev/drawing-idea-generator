@@ -28,7 +28,7 @@ export function EmojiItem({ rolling, emojis }: EmojiItemProps) {
             className={twMerge(
                 'inline-flex items-center justify-center leading-none select-none text-5xl w-32 h-32 rounded-xl',
                 'border-2 border-slate-300',
-                'bg-slate-200'
+                'bg-white'
             )}
         >
             <Twemoji>{text}</Twemoji>
