@@ -12,7 +12,11 @@ export default function Home() {
                     <NavBar />
                     <ModesHandler />
                 </div>
-                <Toaster />
+                <Toaster
+                    toastOptions={{
+                        className: '!bg-white !border-2 !border-slate-300 !shadow-none',
+                    }}
+                />
             </AudioContextProvider>
         </GeneratingModeProvider>
     )
