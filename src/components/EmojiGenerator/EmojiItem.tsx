@@ -5,36 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Twemoji from 'react-twemoji'
 import { twMerge } from 'tailwind-merge'
+import Tooltip from './Tooltip'
 
 interface EmojiItemProps {
     rolling: boolean
     emojis: string[]
-}
-
-interface NameProps {
-    text: string
-    show: boolean
-    x: number
-    y: number
-}
-
-function Name({ text, show, x, y }: NameProps) {
-    return (
-        <div
-            className={twMerge(
-                'fixed z-10 rounded-lg p-1 leading-none pointer-events-none select-none',
-                'text-sm text-slate-200 border-[1px] border-slate-500 bg-slate-700',
-                'transition-opacity duration-100',
-                show ? 'opacity-100' : 'opacity-0'
-            )}
-            style={{
-                left: `${x}px`,
-                top: `${y}px`,
-            }}
-        >
-            {text}
-        </div>
-    )
 }
 
 export function EmojiItem({ rolling, emojis }: EmojiItemProps) {
@@ -85,7 +60,7 @@ export function EmojiItem({ rolling, emojis }: EmojiItemProps) {
 
     return (
         <>
-            <Name
+            <Tooltip
                 text={emojiName || '?'}
                 show={hovered && emojiName !== null && !isDefaultEmoji}
                 x={mouse.x + 15}
