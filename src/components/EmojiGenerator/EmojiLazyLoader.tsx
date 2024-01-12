@@ -1,4 +1,5 @@
 'use client'
+import { CircleNotch } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import Twemoji from 'react-twemoji'
 
@@ -11,7 +12,6 @@ export default function EmojiLazyLoader({ emojis, children }: EmojiLazyLoaderPro
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const toLoad = emojis.length
     const loaded = useRef<number>(0)
-
     const [loadedAll, setLoadedAll] = useState<boolean>(false)
 
     useEffect(() => {
@@ -45,6 +45,12 @@ export default function EmojiLazyLoader({ emojis, children }: EmojiLazyLoaderPro
                     ))}
                 </Twemoji>
             </div>
+            {!loadedAll && (
+                <div className='w-full flex items-center justify-center gap-2 text-slate-400'>
+                    <CircleNotch size={32} weight='bold' className='animate-spin' />
+                    <span className='text-xl font-medium'>loading emojis</span>
+                </div>
+            )}
             {loadedAll && children}
         </>
     )
