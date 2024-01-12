@@ -2,6 +2,7 @@ import EmojiGenerator from '@/components/EmojiGenerator'
 import NavBar from '@/components/Navbar'
 import { AudioContextProvider } from '@/contexts/AudioContext'
 import { GeneratingModeProvider } from '@/contexts/GeneratingModeContext'
+import EMOJIS from '@/util/emojis'
 
 export default function Home() {
     return (
@@ -10,7 +11,7 @@ export default function Home() {
                 <div className='w-full max-w-screen-lg px-4 mx-auto'>
                     <NavBar />
                     <main className='py-10'>
-                        <EmojiGenerator />
+                        <EmojiGenerator emojis={EMOJIS} />
                     </main>
                 </div>
             </AudioContextProvider>

@@ -1,16 +1,21 @@
 'use client'
-import { clamp } from '@/util/math'
+import { clamp } from '@/util/common'
 import { useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Button from '../Button'
 import AlterButton from './AlterButton'
 import EmojiField from './EmojiField'
+import EmojiLazyLoader from './EmojiLazyLoader'
 
 const MAX_NUM = 5
 const MIN_NUM = 1
 const DEFAULT_NUM = 3
 
-export default function EmojiGenerator() {
+interface EmojiGeneratorProps {
+    emojis: string[]
+}
+
+export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
     const [inputError, setInputError] = useState<boolean>(false)
     const [num, setNum] = useState<number>(DEFAULT_NUM)
     const [rolling, setRolling] = useState<boolean>(false)
@@ -59,46 +64,54 @@ export default function EmojiGenerator() {
     }
 
     return (
-        <div className='flex flex-col gap-20'>
-            <div className='w-full flex items-center justify-center'>
-                <div className='flex items-center gap-4'>
-                    <span className='font-medium select-none text-xl text-slate-500'>
-                        number of emojis
-                    </span>
-                    <div className='flex items-center gap-1'>
-                        <input
-                            type='number'
-                            min={MIN_NUM}
-                            max={MAX_NUM}
-                            value={num}
-                            onChange={handleInputChange}
-                            placeholder={DEFAULT_NUM.toString()}
-                            className={twMerge(
-                                'w-16 p-1 rounded-xl',
-                                'transition-colors duration-200 ease-out',
-                                'border-2 border-slate-300',
-                                'text-xl text-center text-slate-600',
-                                'focus:outline-none focus:border-slate-400',
-                                inputError && 'border-red-300 focus:border-red-300'
-                            )}
-                        />
-                        <div className='flex flex-col gap-1'>
-                            <AlterButton onClick={handleIncrement} disabled={num >= MAX_NUM}>
-                                {'+'}
-                            </AlterButton>
-                            <AlterButton onClick={handleDecrement} disabled={num <= MIN_NUM}>
-                                {'-'}
-                            </AlterButton>
+        <>
+            <div className='flex flex-col gap-20'>
+                <div className='w-full flex items-center justify-center'>
+                    <div className='flex items-center gap-4'>
+                        <span className='font-medium select-none text-xl text-slate-500'>
+                            number of emojis
+                        </span>
+                        <div className='flex items-center gap-1'>
+                            <input
+                                type='number'
+                                min={MIN_NUM}
+                                max={MAX_NUM}
+                                value={num}
+                                onChange={handleInputChange}
+                                placeholder={DEFAULT_NUM.toString()}
+                                className={twMerge(
+                                    'w-16 p-1 rounded-xl',
+                                    'transition-colors duration-200 ease-out',
+                                    'border-2 border-slate-300',
+                                    'text-xl text-center text-slate-600',
+                                    'focus:outline-none focus:border-slate-400',
+                                    inputError && 'border-red-300 focus:border-red-300'
+                                )}
+                            />
+                            <div className='flex flex-col gap-1'>
+                                <AlterButton onClick={handleIncrement} disabled={num >= MAX_NUM}>
+                                    {'+'}
+                                </AlterButton>
+                                <AlterButton onClick={handleDecrement} disabled={num <= MIN_NUM}>
+                                    {'-'}
+                                </AlterButton>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <EmojiLazyLoader emojis={emojis}>
+                    <EmojiField
+                        num={clamp(num || 1, MIN_NUM, MAX_NUM)}
+                        rolling={rolling}
+                        emojis={emojis}
+                    />
+                    <div className='w-full flex items-center justify-center'>
+                        <Button accent='pink' onClick={handleGenerate}>
+                            generate
+                        </Button>
+                    </div>
+                </EmojiLazyLoader>
             </div>
-            <EmojiField num={clamp(num || 1, MIN_NUM, MAX_NUM)} rolling={rolling} />
-            <div className='w-full flex items-center justify-center'>
-                <Button accent='pink' onClick={handleGenerate}>
-                    generate
-                </Button>
-            </div>
-        </div>
+        </>
     )
 }
