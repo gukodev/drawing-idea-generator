@@ -27,8 +27,9 @@ export default function SelectiveButton({
         <Button
             {...rest}
             className={twMerge(
-                'bg-slate-200 border-slate-300 text-slate-400 hover:bg-slate-200 hover:border-slate-300 opacity-50',
-                selected ? `${color} opacity-100` : null
+                selected
+                    ? `${color} opacity-100`
+                    : 'bg-slate-200 border-slate-300 text-slate-400 enabled:hover:bg-slate-200 enabled:hover:border-slate-300 opacity-50'
             )}
             noAudio
             onClick={handleClick}
