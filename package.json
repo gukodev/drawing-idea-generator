@@ -4,12 +4,14 @@
     "private": true,
     "scripts": {
         "generateJson": "node ./scripts/generateJson.js",
+        "getEmojiNames": "node ./scripts/getEmojiNames.js",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint"
     },
     "dependencies": {
+        "@headlessui/react": "^1.7.18",
         "@phosphor-icons/react": "^2.0.15",
         "@types/react-twemoji": "^0.4.3",
         "@uidotdev/usehooks": "^2.4.1",
