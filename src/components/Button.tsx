@@ -4,12 +4,13 @@ import { onClickWithAudio } from '@/util/audio'
 import { twMerge } from 'tailwind-merge'
 
 const colorAccents = {
-    purple: 'bg-purple-400 border-purple-500 text-white enabled:hover:bg-purple-300 enabled:hover:border-purple-400',
-    red: 'bg-red-400 border-red-500 text-white enabled:hover:bg-red-300 enabled:hover:border-red-400',
-    gray: 'bg-gray-400 border-gray-500 text-white enabled:hover:bg-gray-300 enabled:hover:border-gray-400',
     ghost: 'bg-transparent border-transparent text-gray-400 enabled:hover:bg-gray-300/50 enabled:hover:text-gray-500',
+    gray: 'bg-gray-400 border-gray-500 text-white enabled:hover:bg-gray-300 enabled:hover:border-gray-400',
+    red: 'bg-red-400 border-red-500 text-white enabled:hover:bg-red-300 enabled:hover:border-red-400',
     pink: 'bg-pink-400 border-pink-500 text-white enabled:hover:bg-pink-300 enabled:hover:border-pink-400',
+    purple: 'bg-purple-400 border-purple-500 text-white enabled:hover:bg-purple-300 enabled:hover:border-purple-400',
     blue: 'bg-blue-400 border-blue-500 text-white enabled:hover:bg-blue-300 enabled:hover:border-blue-400',
+    teal: 'bg-teal-400 border-teal-500 text-white enabled:hover:bg-teal-300 enabled:hover:border-teal-400',
 } as const
 type ColorAccent = keyof typeof colorAccents
 

@@ -19,6 +19,7 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
     const [inputError, setInputError] = useState<boolean>(false)
     const [num, setNum] = useState<number>(DEFAULT_NUM)
     const [rolling, setRolling] = useState<boolean>(false)
+    const [generated, setGenerated] = useState<boolean>(false)
     const canGenerate = !inputError && !rolling
 
     const validateInput = (num: number) => {
@@ -61,7 +62,12 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
         setRolling(true)
         setTimeout(() => {
             setRolling(false)
+            setGenerated(true)
         }, 1000)
+    }
+
+    const handleCopyAll = () => {
+        alert('nuh uh')
     }
 
     return (
@@ -103,14 +109,28 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
                 <EmojiLazyLoader emojis={emojis}>
                     <div className='flex flex-col gap-20'>
                         <EmojiField
-                            num={clamp(num || 1, MIN_NUM, MAX_NUM)}
+                            num={clamp(num || 0, MIN_NUM, MAX_NUM)}
                             rolling={rolling}
                             emojis={emojis}
                         />
-                        <div className='w-full flex items-center justify-center'>
-                            <Button accent='pink' onClick={handleGenerate} disabled={!canGenerate}>
-                                generate
-                            </Button>
+                        <div className='w-full flex justify-center'>
+                            <div className='flex items-center gap-2'>
+                                <Button
+                                    accent='pink'
+                                    onClick={handleGenerate}
+                                    disabled={!canGenerate}
+                                >
+                                    generate
+                                </Button>
+                                <Button
+                                    accent='teal'
+                                    disabled={rolling || !generated}
+                                    onClick={handleCopyAll}
+                                >
+                                    copy all
+                                </Button>
+                                <Button accent='purple'>AI</Button>
+                            </div>
                         </div>
                     </div>
                 </EmojiLazyLoader>
