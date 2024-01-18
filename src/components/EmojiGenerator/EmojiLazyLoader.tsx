@@ -1,6 +1,7 @@
 'use client'
+import { Transition } from '@headlessui/react'
 import { CircleNotch } from '@phosphor-icons/react'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import Twemoji from 'react-twemoji'
 
 interface EmojiLazyLoaderProps {
@@ -8,11 +9,31 @@ interface EmojiLazyLoaderProps {
     children: React.ReactNode
 }
 
+function Loading({ show }: { show: boolean }) {
+    return (
+        <Transition
+            show={show}
+            appear={true}
+            enter='transition-all duration-300 ease-out'
+            leave='transition-all duration-300 ease-in'
+            enterFrom='opacity-0 translate-y-2'
+            enterTo='opacity-100 translate-y-0'
+            leaveFrom='opacity-100 translate-y-2'
+            leaveTo='opacity-0 -translate-y-2'
+            className='w-full flex items-center justify-center gap-2 text-slate-400'
+        >
+            <CircleNotch size={32} weight='bold' className='animate-spin' />
+            <span className='text-xl font-medium max-w-72'>loading emojis</span>
+        </Transition>
+    )
+}
+
 export default function EmojiLazyLoader({ emojis, children }: EmojiLazyLoaderProps) {
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const toLoad = emojis.length
     const loaded = useRef<number>(0)
     const [loadedAll, setLoadedAll] = useState<boolean>(false)
+    const [showChildren, setShowChildren] = useState<boolean>(false)
 
     useEffect(() => {
         if (!wrapperRef.current) return
@@ -33,6 +54,13 @@ export default function EmojiLazyLoader({ emojis, children }: EmojiLazyLoaderPro
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        if (!loadedAll) return
+        setTimeout(() => {
+            setShowChildren(true)
+        }, 350)
+    }, [loadedAll])
+
     return (
         <>
             <div
@@ -45,13 +73,19 @@ export default function EmojiLazyLoader({ emojis, children }: EmojiLazyLoaderPro
                     ))}
                 </Twemoji>
             </div>
-            {!loadedAll && (
-                <div className='w-full flex items-center justify-center gap-2 text-slate-400'>
-                    <CircleNotch size={32} weight='bold' className='animate-spin' />
-                    <span className='text-xl font-medium'>loading emojis</span>
-                </div>
-            )}
-            {loadedAll && children}
+            <Loading show={!loadedAll} />
+            <Transition
+                show={showChildren}
+                enter='transition-opacity duration-300 ease-out'
+                leave='transition-opacity duration-300 ease-out'
+                enterFrom='opacity-0'
+                leaveTo='opacity-0'
+                enterTo='opacity-100'
+                leaveFrom='opacity-100'
+                as={Fragment}
+            >
+                {children}
+            </Transition>
         </>
     )
 }

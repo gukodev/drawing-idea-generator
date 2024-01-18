@@ -101,15 +101,17 @@ export default function EmojiGenerator({ emojis }: EmojiGeneratorProps) {
                     </div>
                 </div>
                 <EmojiLazyLoader emojis={emojis}>
-                    <EmojiField
-                        num={clamp(num || 1, MIN_NUM, MAX_NUM)}
-                        rolling={rolling}
-                        emojis={emojis}
-                    />
-                    <div className='w-full flex items-center justify-center'>
-                        <Button accent='pink' onClick={handleGenerate} disabled={!canGenerate}>
-                            generate
-                        </Button>
+                    <div className='flex flex-col gap-20'>
+                        <EmojiField
+                            num={clamp(num || 1, MIN_NUM, MAX_NUM)}
+                            rolling={rolling}
+                            emojis={emojis}
+                        />
+                        <div className='w-full flex items-center justify-center'>
+                            <Button accent='pink' onClick={handleGenerate} disabled={!canGenerate}>
+                                generate
+                            </Button>
+                        </div>
                     </div>
                 </EmojiLazyLoader>
             </div>
